@@ -4,6 +4,8 @@
 
 package com.mycompany.gatuslaostudentsapp;
 
+import java.awt.Dialog;
+
 /**
  *
  * @author Maraudger
@@ -11,6 +13,6 @@ package com.mycompany.gatuslaostudentsapp;
 public class GatuslaoStudentsApp {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        new StudentManagementForm().show();
     }
 }
