@@ -94,6 +94,11 @@ public class StudentManagementForm extends javax.swing.JFrame {
                 txtSearchActionPerformed(evt);
             }
         });
+        txtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtSearchKeyTyped(evt);
+            }
+        });
 
         btnSearch.setText("Search Student");
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
@@ -189,6 +194,11 @@ public class StudentManagementForm extends javax.swing.JFrame {
     private void txtSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSearchActionPerformed
+
+    private void txtSearchKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyTyped
+        // TODO add your handling code here:
+        populateTable(tblStudents,true);
+    }//GEN-LAST:event_txtSearchKeyTyped
 
     private void openEditForm(){
         
