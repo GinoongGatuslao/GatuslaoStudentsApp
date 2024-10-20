@@ -47,6 +47,8 @@ public class StudentManagementForm extends javax.swing.JFrame {
         btnAddStudent = new javax.swing.JButton();
         txtSearch = new javax.swing.JTextField();
         btnSearch = new javax.swing.JButton();
+        jToolBar1 = new javax.swing.JToolBar();
+        btnZodeManager = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -107,28 +109,45 @@ public class StudentManagementForm extends javax.swing.JFrame {
             }
         });
 
+        jToolBar1.setRollover(true);
+
+        btnZodeManager.setText("ZNode Management");
+        btnZodeManager.setFocusable(false);
+        btnZodeManager.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnZodeManager.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnZodeManager.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnZodeManagerMouseClicked(evt);
+            }
+        });
+        jToolBar1.add(btnZodeManager);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAddStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 711, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)))
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnAddStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 711, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE))))
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(btnAddStudent))
@@ -199,6 +218,16 @@ public class StudentManagementForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         populateTable(tblStudents,true);
     }//GEN-LAST:event_txtSearchKeyTyped
+
+    private void btnZodeManagerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnZodeManagerMouseClicked
+        // TODO add your handling code here:
+        int result = ZookeeperManagerPanel.showDialog(this,0,null);
+            if (result == JOptionPane.OK_OPTION) {
+                populateTable(tblStudents,false);
+            }else{
+                populateTable(tblStudents,false);
+            }
+    }//GEN-LAST:event_btnZodeManagerMouseClicked
 
     private void openEditForm(){
         
@@ -364,8 +393,10 @@ public class StudentManagementForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddStudent;
     private javax.swing.JButton btnSearch;
+    private javax.swing.JButton btnZodeManager;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JTable tblStudents;
     private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
