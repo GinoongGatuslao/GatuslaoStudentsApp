@@ -26,7 +26,7 @@ public class ZookeeperManagerPanel extends javax.swing.JPanel {
      private boolean isConnected = false;
      private int dialogResult;
      ZooKeeper host;
-     ZookeeperConnection zkInstance = new ZookeeperConnection();
+     ZookeeperConnection zkInstance;
      
     /**
      * Creates new form ZookeeperManagerPanel

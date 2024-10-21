@@ -20,6 +20,8 @@ import java.util.List;
 import org.bson.types.ObjectId;
 public class MongoConnection {
      //database vars
+     private static final String ZOOKEEPER_SERVERS = "localhost:2181";
+     private static final String ZNODE_PATH = "/mongo_servers";
      private static final String DATABASE_NAME ="online_school";
      private static final String COLLECTION_NAME ="student_information";
      private static MongoDatabase database;
@@ -28,7 +30,7 @@ public class MongoConnection {
      
      public static void connect(){
          try {
-             mongoClient = MongoClients.create("mongodb://localhost:27017");
+             mongoClient = MongoClients.create("mongodb://localhost:27017,localhost:27018,localhost:27019/?replicaSet=rs0");
              database = mongoClient.getDatabase(DATABASE_NAME);
              collection = database.getCollection(COLLECTION_NAME);
          } catch (Exception e) {

@@ -12,6 +12,12 @@ import javax.swing.table.DefaultTableModel;
 import org.bson.Document;
 import com.mongodb.client.MongoCollection;
 import org.bson.conversions.Bson;
+import org.apache.zookeeper.CreateMode;
+import org.apache.zookeeper.KeeperException;
+import org.apache.zookeeper.WatchedEvent;
+import org.apache.zookeeper.Watcher;
+import org.apache.zookeeper.ZooDefs;
+import org.apache.zookeeper.ZooKeeper;
 
 /**
  *
@@ -22,6 +28,9 @@ public class StudentManagementForm extends javax.swing.JFrame {
     /**
      * Creates new form StudentManagementForm
      */
+    private static ZooKeeper zooKeeper;
+    private static final String ZOOKEEPER_SERVERS = "localhost:2181";
+     private static final String ZNODE_PATH = "/mongo_servers";
     private MongoConnection mc = new MongoConnection();
     private StringBuilder sb = new StringBuilder();
     public StudentManagementForm() {
@@ -49,6 +58,7 @@ public class StudentManagementForm extends javax.swing.JFrame {
         btnSearch = new javax.swing.JButton();
         jToolBar1 = new javax.swing.JToolBar();
         btnZodeManager = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -112,6 +122,7 @@ public class StudentManagementForm extends javax.swing.JFrame {
         jToolBar1.setRollover(true);
 
         btnZodeManager.setText("ZNode Management");
+        btnZodeManager.setEnabled(false);
         btnZodeManager.setFocusable(false);
         btnZodeManager.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnZodeManager.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -121,6 +132,17 @@ public class StudentManagementForm extends javax.swing.JFrame {
             }
         });
         jToolBar1.add(btnZodeManager);
+
+        jButton1.setText("Start Connection");
+        jButton1.setFocusable(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -228,6 +250,20 @@ public class StudentManagementForm extends javax.swing.JFrame {
                 populateTable(tblStudents,false);
             }
     }//GEN-LAST:event_btnZodeManagerMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            ZookeeperConnection zkInstance = new ZookeeperConnection();
+            zooKeeper = zkInstance.getZookeeper();
+            zooKeeper.getData(ZNODE_PATH,event->{
+                if(event.getType()==Watcher.Event.EventType.NodeDataChanged){
+                    populateTable(tblStudents,false);
+                }
+            },null);
+        } catch (Exception e) {
+        } finally {
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void openEditForm(){
         
@@ -394,6 +430,7 @@ public class StudentManagementForm extends javax.swing.JFrame {
     private javax.swing.JButton btnAddStudent;
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnZodeManager;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;

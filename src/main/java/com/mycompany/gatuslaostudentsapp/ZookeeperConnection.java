@@ -8,6 +8,7 @@ package com.mycompany.gatuslaostudentsapp;
  *
  * @author Roger Gatuslao
  */
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
 import org.apache.zookeeper.CreateMode;
@@ -17,9 +18,25 @@ import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.ZooKeeper;
 public class ZookeeperConnection {
+    
+    
     private ZooKeeper zooKeeper;
+    private static final String ZOOKEEPER_HOST ="localhost:2181";
     private static final int SESSION_TIMEOUT = 3000;
-     private final CountDownLatch connectedSignal = new CountDownLatch(1);
+    private final CountDownLatch connectedSignal = new CountDownLatch(1);
+    
+        public ZookeeperConnection() throws IOException {
+            zooKeeper = new ZooKeeper(ZOOKEEPER_HOST, SESSION_TIMEOUT, new Watcher() {
+                @Override
+                public void process(WatchedEvent event) {
+                    System.out.println("Zookeeper event triggered: " + event.getType());
+                }
+            });
+        }
+        
+        public ZooKeeper getZookeeper(){
+            return zooKeeper;
+        }
      
         public boolean connect(String host) throws Exception {
            
@@ -29,6 +46,15 @@ public class ZookeeperConnection {
                 }
             });
          return true;
+        }
+        public ZooKeeper connectToServer(String host) throws Exception {
+           
+            zooKeeper = new ZooKeeper(host, SESSION_TIMEOUT, event -> {
+                if (event.getState() == Watcher.Event.KeeperState.SyncConnected) {
+                    System.out.println("ZooKeeper connection established!");
+                }
+            });
+          return zooKeeper;
         }
     
     public String createZNode(String path, String data) {
